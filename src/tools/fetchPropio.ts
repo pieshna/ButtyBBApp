@@ -13,10 +13,10 @@ export const fetchPropio = async (
       }
     }
 
-    if (token) {
+    if (token()) {
       options.headers = {
         ...options.headers,
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token()}`
       }
     }
 
@@ -24,11 +24,14 @@ export const fetchPropio = async (
       options.body = JSON.stringify(body)
     }
 
-    const response = await fetch(API_URL + '/' + url, options)
-    const data = await response.json()
-    return data
+    const response = await fetch(API_URL + '/' + url, options).then((res) => {
+      if (!res.ok) {
+        throw new Error(res.statusText)
+      }
+      return res.json()
+    })
+    return response
   } catch (error) {
-    console.log(error)
     return null
   }
 }
