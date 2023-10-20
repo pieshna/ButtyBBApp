@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { fetchPropio } from '../tools/fetchPropio'
 import ModalPropio from '../components/ModalPropio'
 import { useDisclosure } from '@chakra-ui/hooks'
+import FormularioPropio from '../components/Formularios/Formulario'
+import { estructuraProveedor } from './estructuraProveedor'
 
 interface NewEditProveedorProps {
   id?: string
@@ -19,33 +21,28 @@ interface Proveedor {
 
 function NewEditProveedor({ id, setId }: NewEditProveedorProps) {
   const { isOpen, onOpen, onClose: onCloseModal } = useDisclosure()
-  const [data, setData] = useState({} as Proveedor)
+  const [data, setData] = useState({})
   useEffect(() => {
     if (!id) return
     fetchPropio(`proveedores/${id}`).then((data) => {
       setData(data[0])
     })
     onOpen()
-  }, [id])
+  }, [])
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault()
+  const handleSubmit = (datosEnvio: Record<string, string>) => {
     if (id) {
-      delete data.created_at
-      delete data.updated_at
-      delete data.id
-      fetchPropio(`proveedores/${id}`, 'PUT', data).then(() => {
+      delete datosEnvio.created_at
+      delete datosEnvio.updated_at
+      delete datosEnvio.id
+      fetchPropio(`proveedores/${id}`, 'PUT', datosEnvio).then(() => {
         handleCloseModal()
       })
     } else {
-      fetchPropio('proveedores', 'POST', data).then(() => {
+      fetchPropio('proveedores', 'POST', datosEnvio).then(() => {
         handleCloseModal()
       })
     }
-  }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setData({ ...data, [e.target.name]: e.target.value })
   }
 
   const handleCloseModal = () => {
@@ -62,41 +59,11 @@ function NewEditProveedor({ id, setId }: NewEditProveedorProps) {
         onClose={handleCloseModal}
         onOpen={onOpen}
       >
-        <form>
-          <div className="input-group">
-            <span className="input-group-text">Nombre:</span>
-            <input
-              type="text"
-              className="form-control"
-              name="nombre"
-              value={data.nombre}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="input-group">
-            <span className="input-group-text">Telefono:</span>
-            <input
-              className="form-control"
-              type="text"
-              name="telefono"
-              value={data.telefono}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="input-group">
-            <span className="input-group-text">Compania:</span>
-            <input
-              className="form-control"
-              type="text"
-              name="compania"
-              value={data.compania}
-              onChange={handleChange}
-            />
-          </div>
-          <button className="btn btn-primary" onClick={handleSubmit}>
-            Submit
-          </button>
-        </form>
+        <FormularioPropio
+          datosAMostrar={data}
+          formData={estructuraProveedor}
+          onSubmitFunction={handleSubmit}
+        />
       </ModalPropio>
     </>
   )

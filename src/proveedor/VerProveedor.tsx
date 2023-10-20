@@ -13,7 +13,6 @@ function VerProveedor() {
   }, [])
 
   const handleEdit = (id: number) => {
-    console.log('Editar', id)
     setId(id.toString())
   }
 
