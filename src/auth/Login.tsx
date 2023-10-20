@@ -1,14 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { fetchPropio } from '../tools/fetchPropio'
 import { useNavigate } from 'react-router-dom'
-import { Form } from 'react-bootstrap'
 import FormularioPropio from '../components/Formularios/Formulario'
 import { estructuraFormularioLogin } from './estructuraLogin'
 
 function Login() {
-  const [correo, setCorreo] = useState('')
-  const [password, setPassword] = useState('')
-
   const navigate = useNavigate()
 
   useEffect(() => {
