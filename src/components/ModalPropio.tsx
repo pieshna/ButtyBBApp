@@ -15,6 +15,7 @@ interface ModalPropioProps {
   onOpen: () => void
   onClose: () => void
   isOpen: boolean
+  ocultar?: boolean
 }
 
 function ModalPropio({
@@ -23,11 +24,14 @@ function ModalPropio({
   children,
   onOpen,
   onClose,
-  isOpen
+  isOpen,
+  ocultar = false
 }: ModalPropioProps) {
   return (
     <>
-      <Button onClick={onOpen}>{buttonToShowModalText}</Button>
+      <Button onClick={onOpen} className={ocultar ? 'd-none' : ''}>
+        {buttonToShowModalText}
+      </Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

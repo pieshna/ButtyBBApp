@@ -5,12 +5,14 @@ import TablaPropia from '../components/TablaPropia'
 
 function VerProveedor() {
   const [data, setData] = useState([])
+  const [reload, setReload] = useState(false)
   const [id, setId] = useState('')
   useEffect(() => {
     fetchPropio('proveedores').then((data) => {
       setData(data)
     })
-  }, [])
+    if (reload) setReload(false)
+  }, [reload])
 
   const handleEdit = (id: number) => {
     setId(id.toString())
@@ -23,8 +25,8 @@ function VerProveedor() {
   return (
     <>
       <h2>Proveedores</h2>
-      <NewEditProveedor />
-      {id && <NewEditProveedor id={id} setId={setId} />}
+      <NewEditProveedor reload={setReload} />
+      {id && <NewEditProveedor id={id} setId={setId} reload={setReload} />}
       <TablaPropia
         data={data}
         acciones={{ editarPerso: handleEdit, eliminar: handleDelete }}

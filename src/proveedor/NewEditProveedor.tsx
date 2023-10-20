@@ -8,6 +8,7 @@ import { estructuraProveedor } from './estructuraProveedor'
 interface NewEditProveedorProps {
   id?: string
   setId?: any
+  reload: any
 }
 
 interface Proveedor {
@@ -19,7 +20,7 @@ interface Proveedor {
   updated_at?: string
 }
 
-function NewEditProveedor({ id, setId }: NewEditProveedorProps) {
+function NewEditProveedor({ id, setId, reload }: NewEditProveedorProps) {
   const { isOpen, onOpen, onClose: onCloseModal } = useDisclosure()
   const [data, setData] = useState({})
   useEffect(() => {
@@ -37,10 +38,12 @@ function NewEditProveedor({ id, setId }: NewEditProveedorProps) {
       delete datosEnvio.id
       fetchPropio(`proveedores/${id}`, 'PUT', datosEnvio).then(() => {
         handleCloseModal()
+        reload(true)
       })
     } else {
       fetchPropio('proveedores', 'POST', datosEnvio).then(() => {
         handleCloseModal()
+        reload(true)
       })
     }
   }
@@ -58,6 +61,7 @@ function NewEditProveedor({ id, setId }: NewEditProveedorProps) {
         isOpen={isOpen}
         onClose={handleCloseModal}
         onOpen={onOpen}
+        ocultar={id ? true : false}
       >
         <FormularioPropio
           datosAMostrar={data}
