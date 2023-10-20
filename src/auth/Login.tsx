@@ -28,7 +28,11 @@ function Login() {
   return (
     <>
       <div className=" w-full h-screen flex flex-col justify-center items-center p-6">
-        <Form onSubmit={handleSubmit}>
+        <Form
+          onSubmit={handleSubmit}
+          className="px-5 pt-5 pb-4 bg-pateleta-900 rounded-md"
+        >
+          <h1 className="text-center text-3xl pb-4">Login</h1>
           <Form.Group className="pb-2">
             <Form.Label>Correo</Form.Label>
             <Form.Control
@@ -47,7 +51,9 @@ function Login() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Group>
-          <button className="btn btn-primary">Submit</button>
+          <div className="flex justify-center pt-3">
+            <button className="btn btn-primary">Submit</button>
+          </div>
         </Form>
       </div>
     </>
