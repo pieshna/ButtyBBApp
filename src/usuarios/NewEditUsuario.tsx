@@ -3,36 +3,38 @@ import { fetchPropio } from '../tools/fetchPropio'
 import ModalPropio from '../components/ModalPropio'
 import { useDisclosure } from '@chakra-ui/hooks'
 import FormularioPropio from '../components/Formularios/Formulario'
-import { estructuraProveedor } from './estructuraProveedor'
+import { estructuraUsuario } from './estructuraUsuarios'
 
-interface NewEditProveedorProps {
+interface NewEditUsuarioProps {
   id?: string
   setId?: any
   reload: any
 }
 
-function NewEditProveedor({ id, setId, reload }: NewEditProveedorProps) {
+function NewEditUsuario({ id, setId, reload }: NewEditUsuarioProps) {
   const { isOpen, onOpen, onClose: onCloseModal } = useDisclosure()
   const [data, setData] = useState({})
   useEffect(() => {
     if (!id) return
-    fetchPropio(`proveedores/${id}`).then((data) => {
+    fetchPropio(`usuarios/${id}`).then((data) => {
       setData(data[0])
     })
     onOpen()
   }, [])
 
-  const handleSubmit = (datosEnvio: Record<string, string>) => {
+  const handleSubmit = (datosEnvio: Record<string, any>) => {
+    datosEnvio.rol_id = parseInt(datosEnvio.rol_id)
     if (id) {
       delete datosEnvio.created_at
       delete datosEnvio.updated_at
       delete datosEnvio.id
-      fetchPropio(`proveedores/${id}`, 'PUT', datosEnvio).then(() => {
+      delete datosEnvio.foto
+      fetchPropio(`usuarios/${id}`, 'PUT', datosEnvio).then(() => {
         handleCloseModal()
         reload(true)
       })
     } else {
-      fetchPropio('proveedores', 'POST', datosEnvio).then(() => {
+      fetchPropio('usuarios', 'POST', datosEnvio).then(() => {
         handleCloseModal()
         reload(true)
       })
@@ -48,7 +50,7 @@ function NewEditProveedor({ id, setId, reload }: NewEditProveedorProps) {
     <>
       <ModalPropio
         buttonToShowModalText="Nuevo"
-        titulo="Proveedor"
+        titulo="Usuario"
         isOpen={isOpen}
         onClose={handleCloseModal}
         onOpen={onOpen}
@@ -56,7 +58,7 @@ function NewEditProveedor({ id, setId, reload }: NewEditProveedorProps) {
       >
         <FormularioPropio
           datosAMostrar={data}
-          formData={estructuraProveedor}
+          formData={estructuraUsuario}
           onSubmitFunction={handleSubmit}
         />
       </ModalPropio>
@@ -64,4 +66,4 @@ function NewEditProveedor({ id, setId, reload }: NewEditProveedorProps) {
   )
 }
 
-export default NewEditProveedor
+export default NewEditUsuario

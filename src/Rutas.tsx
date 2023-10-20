@@ -4,9 +4,11 @@ import App from './App'
 import Login from './auth/Login'
 import Logout from './auth/Logout'
 import VerProveedor from './proveedor/VerProveedor'
+import VerUsuario from './usuarios/VerUsuario'
 function Rutas() {
   return (
     <Routes>
+      <Route path="/usuarios" element={<VerUsuario />} />
       <Route path="/proveedores" element={<VerProveedor />} />
       <Route path="/logout" element={<Logout />} />
       <Route path="/login" element={<Login />} />
