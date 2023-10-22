@@ -14,8 +14,11 @@ interface NewEditUsuarioProps {
 function NewEditUsuario({ id, setId, reload }: NewEditUsuarioProps) {
   const { isOpen, onOpen, onClose: onCloseModal } = useDisclosure()
   const [data, setData] = useState({})
+  const [estructura, setEstructura] = useState(estructuraUsuario)
   useEffect(() => {
+    setEstructura({ ...estructura })
     if (!id) return
+    delete estructura.password
     fetchPropio(`usuarios/${id}`).then((data) => {
       setData(data[0])
     })
@@ -58,7 +61,7 @@ function NewEditUsuario({ id, setId, reload }: NewEditUsuarioProps) {
       >
         <FormularioPropio
           datosAMostrar={data}
-          formData={estructuraUsuario}
+          formData={estructura}
           onSubmitFunction={handleSubmit}
         />
       </ModalPropio>
