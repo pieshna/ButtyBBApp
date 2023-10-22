@@ -30,7 +30,7 @@ export const fetchPropio = async (
       }
       return res.json()
     })
-    if (!response?.insertId) {
+    if (response[0]?.created_at && response[0]?.updated_at) {
       response.map((item: any) => {
         if (item.created_at) {
           item.created_at = timeAgo(item.created_at)
