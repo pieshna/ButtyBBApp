@@ -30,6 +30,14 @@ export const fetchPropio = async (
       }
       return res.json()
     })
+    response.map((item: any) => {
+      if (item.created_at) {
+        item.created_at = timeAgo(item.created_at)
+      }
+      if (item.updated_at) {
+        item.updated_at = timeAgo(item.updated_at)
+      }
+    })
     return response
   } catch (error) {
     return null
@@ -43,21 +51,15 @@ export const timeAgo = (date: string) => {
   const minutes = diff / (1000 * 60)
   const hours = minutes / 60
   const days = hours / 24
-  const weeks = days / 7
-  const months = weeks / 4
-  const years = months / 12
 
   if (minutes < 60) {
-    return `${Math.round(minutes)} minutes ago`
+    return `Hace ${Math.round(minutes)} minutos.`
   } else if (hours < 24) {
-    return `${Math.round(hours)} hours ago`
+    return `Hace ${Math.round(hours)} horas.`
   } else if (days < 7) {
-    return `${Math.round(days)} days ago`
-  } else if (weeks < 4) {
-    return `${Math.round(weeks)} weeks ago`
-  } else if (months < 12) {
-    return `${Math.round(months)} months ago`
+    return `Hace ${Math.round(days)} dias.`
   } else {
-    return `${Math.round(years)} years ago`
+    const fecha = date.split('T')[0].split('-')
+    return `${fecha[2]}/${fecha[1]}/${fecha[0]}`
   }
 }
