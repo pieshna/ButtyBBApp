@@ -30,14 +30,16 @@ export const fetchPropio = async (
       }
       return res.json()
     })
-    response.map((item: any) => {
-      if (item.created_at) {
-        item.created_at = timeAgo(item.created_at)
-      }
-      if (item.updated_at) {
-        item.updated_at = timeAgo(item.updated_at)
-      }
-    })
+    if (!response?.insertId) {
+      response.map((item: any) => {
+        if (item.created_at) {
+          item.created_at = timeAgo(item.created_at)
+        }
+        if (item.updated_at) {
+          item.updated_at = timeAgo(item.updated_at)
+        }
+      })
+    }
     return response
   } catch (error) {
     return null

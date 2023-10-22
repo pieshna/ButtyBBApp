@@ -6,9 +6,11 @@ import Logout from './auth/Logout'
 import VerProveedor from './proveedor/VerProveedor'
 import VerUsuario from './usuarios/VerUsuario'
 import VerCliente from './clientes/VerCliente'
+import VerProducto from './productos/VerProducto'
 function Rutas() {
   return (
     <Routes>
+      <Route path="/productos" element={<VerProducto />} />
       <Route path="/clientes" element={<VerCliente />} />
       <Route path="/usuarios" element={<VerUsuario />} />
       <Route path="/proveedores" element={<VerProveedor />} />
