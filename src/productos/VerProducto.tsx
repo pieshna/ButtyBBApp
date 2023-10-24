@@ -22,26 +22,19 @@ function VerProducto() {
     console.log('Eliminar', id)
   }
 
-  const hideCols = [
-    'id',
-    'created_at',
-    'updated_at',
-    'password',
-    'rol_id',
-    'foto'
-  ]
-
   return (
-    <>
-      <h2>Productos</h2>
-      <NewEditProducto reload={setReload} />
-      {id && <NewEditProducto id={id} setId={setId} reload={setReload} />}
+    <div className="p-5">
+      <h2 className="pb-2 text-center text-4xl">Productos</h2>
+      <div className="py-3">
+        <NewEditProducto reload={setReload} />
+        {id && <NewEditProducto id={id} setId={setId} reload={setReload} />}
+      </div>
       <TablaPropia
         data={data}
         acciones={{ editarPerso: handleEdit, eliminar: handleDelete }}
-        hideCamps={hideCols}
+        agregarBuscador
       />
-    </>
+    </div>
   )
 }
 

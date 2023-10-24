@@ -23,15 +23,17 @@ function VerProveedor() {
   }
 
   return (
-    <>
-      <h2>Proveedores</h2>
-      <NewEditProveedor reload={setReload} />
-      {id && <NewEditProveedor id={id} setId={setId} reload={setReload} />}
+    <div className="p-5">
+      <h2 className="pb-2 text-center text-4xl">Proveedores</h2>
+      <div className="py-3">
+        <NewEditProveedor reload={setReload} />
+        {id && <NewEditProveedor id={id} setId={setId} reload={setReload} />}
+      </div>
       <TablaPropia
         data={data}
         acciones={{ editarPerso: handleEdit, eliminar: handleDelete }}
       />
-    </>
+    </div>
   )
 }
 

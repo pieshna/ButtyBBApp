@@ -36,16 +36,18 @@ function VerUsuario() {
   ]
 
   return (
-    <>
-      <h2>Usuarios</h2>
-      <NewEditUsuario reload={setReload} />
-      {id && <NewEditUsuario id={id} setId={setId} reload={setReload} />}
+    <div className="p-5">
+      <h2 className="pb-2 text-center text-4xl">Usuarios</h2>
+      <div className="py-3">
+        <NewEditUsuario reload={setReload} />
+        {id && <NewEditUsuario id={id} setId={setId} reload={setReload} />}
+      </div>
       <TablaPropia
         data={data}
         acciones={{ editarPerso: handleEdit, eliminar: handleDelete }}
         hideCamps={hideCols}
       />
-    </>
+    </div>
   )
 }
 

@@ -32,16 +32,18 @@ function VerCliente() {
   ]
 
   return (
-    <>
-      <h2>Clientes</h2>
-      <NewEditUsuario reload={setReload} />
-      {id && <NewEditUsuario id={id} setId={setId} reload={setReload} />}
+    <div className="p-5">
+      <h2 className="text-4xl text-center pb-2">Clientes</h2>
+      <div className="py-3">
+        <NewEditUsuario reload={setReload} />
+        {id && <NewEditUsuario id={id} setId={setId} reload={setReload} />}
+      </div>
       <TablaPropia
         data={data}
         acciones={{ editarPerso: handleEdit, eliminar: handleDelete }}
         hideCamps={hideCols}
       />
-    </>
+    </div>
   )
 }
 
