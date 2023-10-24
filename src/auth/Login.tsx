@@ -26,11 +26,16 @@ function Login() {
     <>
       <div className=" w-full h-screen flex flex-col justify-center items-center p-6">
         <div className="px-5 pt-5 pb-4 bg-pateleta-400 rounded-md">
-          <p className="text-center text-xl pb-4">Login</p>
+          <div className="flex flex-col items-center">
+            <img src="/logo.png" alt="logo" className="w-44" />
+          </div>
+
+          <p className="text-center text-xl pb-4">Iniciar Sesion</p>
           <FormularioPropio
             datosAMostrar={{}}
             formData={estructuraFormularioLogin}
             onSubmitFunction={handleSubmit}
+            textoBoton="Iniciar Sesion"
           />
         </div>
       </div>
