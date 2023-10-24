@@ -9,11 +9,13 @@ import VerCliente from './clientes/VerCliente'
 import VerProducto from './productos/VerProducto'
 import Compras from './compraventa/Compras'
 import { decodeToken } from './tools/constantes'
+import Ventas from './compraventa/Ventas'
 function Rutas() {
-  const { rol } = decodeToken()
+  const rol = decodeToken()?.rol || ''
   const esAdmin = () => {
     return (
       <Routes>
+        <Route path="/ventas" element={<Ventas />} />
         <Route path="/compras" element={<Compras />} />
         <Route path="/productos" element={<VerProducto />} />
         <Route path="/clientes" element={<VerCliente />} />
@@ -29,6 +31,7 @@ function Rutas() {
   const esEmpleado = () => {
     return (
       <Routes>
+        <Route path="/ventas" element={<Ventas />} />
         <Route path="/clientes" element={<VerCliente />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/login" element={<Login />} />
