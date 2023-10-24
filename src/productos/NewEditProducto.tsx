@@ -71,7 +71,7 @@ function NewEditProducto({ id, setId, reload }: NewEditProductoProps) {
     <>
       <ModalPropio
         buttonToShowModalText="Nuevo"
-        titulo="Cliente"
+        titulo="Producto"
         isOpen={isOpen}
         onClose={handleCloseModal}
         onOpen={onOpen}
