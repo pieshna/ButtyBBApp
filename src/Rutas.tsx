@@ -7,9 +7,11 @@ import VerProveedor from './proveedor/VerProveedor'
 import VerUsuario from './usuarios/VerUsuario'
 import VerCliente from './clientes/VerCliente'
 import VerProducto from './productos/VerProducto'
+import Compras from './compraventa/Compras'
 function Rutas() {
   return (
     <Routes>
+      <Route path="/compras" element={<Compras />} />
       <Route path="/productos" element={<VerProducto />} />
       <Route path="/clientes" element={<VerCliente />} />
       <Route path="/usuarios" element={<VerUsuario />} />
