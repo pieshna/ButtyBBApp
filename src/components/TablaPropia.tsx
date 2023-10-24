@@ -1,7 +1,7 @@
 import { Table as BootstrapTable, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-
 import { useState } from 'react'
+import ReactPaginate from 'react-paginate'
 
 interface TableProps {
   data: any[]
@@ -14,6 +14,7 @@ interface TableProps {
   hideCamps?: string[]
   onColumnSelected?: (item: any, column: string) => void
   agregarBuscador?: boolean
+  itemsPerPage?: number
 }
 
 const TablaPropia: React.FC<TableProps> = ({
@@ -22,10 +23,12 @@ const TablaPropia: React.FC<TableProps> = ({
   acciones,
   hideCamps = [],
   onColumnSelected,
-  agregarBuscador = false
+  agregarBuscador = false,
+  itemsPerPage = 10
 }) => {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedField, setSelectedField] = useState('')
+  const [currentPage, setCurrentPage] = useState(0)
 
   if (data.length === 0) {
     return <p>No hay datos disponibles.</p>
@@ -50,11 +53,23 @@ const TablaPropia: React.FC<TableProps> = ({
         )
   )
 
+  const pageCount = Math.ceil(filteredData.length / itemsPerPage)
+  const offset = currentPage * itemsPerPage
+  const currentPageData = filteredData.slice(offset, offset + itemsPerPage)
+
+  const handlePageClick = (data: { selected: number }) => {
+    setCurrentPage(data.selected)
+  }
+
   return (
     <div className="table-responsive">
       {agregarBuscador && (
-        <div>
-          <select value={selectedField} onChange={handleFieldSelected}>
+        <div className="flex justify-end pb-2">
+          <select
+            value={selectedField}
+            className="form-control w-56"
+            onChange={handleFieldSelected}
+          >
             <option value="">Buscar en todos los campos</option>
             {headers.map((header) => (
               <option key={header} value={header}>
@@ -64,7 +79,8 @@ const TablaPropia: React.FC<TableProps> = ({
           </select>
           <input
             type="text"
-            placeholder="Buscar..."
+            placeholder="🔍Buscar..."
+            className="form-control w-56 ml-2"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -81,9 +97,9 @@ const TablaPropia: React.FC<TableProps> = ({
           </tr>
         </thead>
         <tbody>
-          {filteredData.map((item, index) => (
+          {currentPageData.map((item, index) => (
             <tr key={item.id}>
-              {enumerar && <td>{index + 1}</td>}
+              {enumerar && <td>{offset + index + 1}</td>}
               {headers.map((header) => (
                 <td
                   key={header}
@@ -124,6 +140,24 @@ const TablaPropia: React.FC<TableProps> = ({
           ))}
         </tbody>
       </BootstrapTable>
+      {filteredData.length > itemsPerPage && (
+        <ReactPaginate
+          previousLabel={'Anterior'}
+          nextLabel={'Siguiente'}
+          breakLabel={'...'}
+          breakClassName={'break-me'}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageClick}
+          containerClassName={'pagination'}
+          activeClassName={'active'}
+          className="flex justify-center"
+          pageLinkClassName="px-2 mx-1 btn btn-outline-primary"
+          nextClassName="px-2 mx-1 btn btn-outline-primary"
+          previousClassName="px-2 mx-1 btn btn-outline-primary"
+        />
+      )}
     </div>
   )
 }
