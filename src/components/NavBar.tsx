@@ -12,8 +12,13 @@ function NavBar() {
     return (
       <Navbar expand="lg" className="bg-pateleta-300">
         <Container>
-          <Link to="/">
-            <Navbar.Brand href="/">ButtyBB</Navbar.Brand>
+          <Link to="/" className="flex">
+            <Navbar.Brand href="/">
+              <div className="flex items-center">
+                <img src="/logo.png" alt="imagen" className="w-12" />
+                ButtyBB
+              </div>
+            </Navbar.Brand>
           </Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
@@ -56,8 +61,13 @@ function NavBar() {
     return (
       <Navbar expand="lg" className="bg-pateleta-300">
         <Container>
-          <Link to="/">
-            <Navbar.Brand href="/">ButtyBB</Navbar.Brand>
+          <Link to="/" className="flex">
+            <Navbar.Brand href="/">
+              <div className="flex items-center">
+                <img src="/logo.png" alt="imagen" className="w-12" />
+                ButtyBB
+              </div>
+            </Navbar.Brand>
           </Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
