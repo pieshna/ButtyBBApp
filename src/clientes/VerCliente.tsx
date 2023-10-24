@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react'
 import { fetchPropio } from '../tools/fetchPropio'
 import TablaPropia from '../components/TablaPropia'
 import NewEditUsuario from './NewEditCliente'
+import { decodeToken } from '../tools/constantes'
 
 function VerCliente() {
+  const { rol } = decodeToken()
   const [data, setData] = useState([])
   const [reload, setReload] = useState(false)
   const [id, setId] = useState('')
@@ -38,11 +40,16 @@ function VerCliente() {
         <NewEditUsuario reload={setReload} />
         {id && <NewEditUsuario id={id} setId={setId} reload={setReload} />}
       </div>
-      <TablaPropia
-        data={data}
-        acciones={{ editarPerso: handleEdit, eliminar: handleDelete }}
-        hideCamps={hideCols}
-      />
+      {rol === 'Administrador' && (
+        <TablaPropia
+          data={data}
+          acciones={{ editarPerso: handleEdit, eliminar: handleDelete }}
+          hideCamps={hideCols}
+        />
+      )}
+      {rol !== 'Administrador' && (
+        <TablaPropia data={data} hideCamps={hideCols} />
+      )}
     </div>
   )
 }
