@@ -36,6 +36,7 @@ function Rutas() {
         <Route path="/logout" element={<Logout />} />
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<App />} />
+        <Route path="/" element={<App />} />
       </Routes>
     )
   }
