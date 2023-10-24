@@ -87,13 +87,19 @@ function Compras() {
 
   return (
     <>
-      <FormularioPropio
-        datosAMostrar={{}}
-        formData={estructura}
-        onSubmitFunction={handleSubmit}
-        dataToReturn={dataReturned}
-        onChanges={onChanges}
-      />
+      <div className="p-5">
+        <h2 className="text-4xl text-center pb-4">Compra de Productos</h2>
+        <div className="py-3 px-10">
+          <FormularioPropio
+            datosAMostrar={{}}
+            formData={estructura}
+            onSubmitFunction={handleSubmit}
+            dataToReturn={dataReturned}
+            onChanges={onChanges}
+            textoBoton="Realizar Compra"
+          />
+        </div>
+      </div>
     </>
   )
 }
