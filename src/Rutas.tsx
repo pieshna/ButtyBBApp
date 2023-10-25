@@ -35,7 +35,7 @@ function Rutas() {
         <Route path="/clientes" element={<VerCliente />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/home" element={<App />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/" element={<App />} />
       </Routes>
     )
