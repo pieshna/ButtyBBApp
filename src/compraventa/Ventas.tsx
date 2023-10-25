@@ -1,8 +1,13 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 import TablaPropia from '../components/TablaPropia'
 import { fetchPropio } from '../tools/fetchPropio'
+import ModalPropio from '../components/ModalPropio'
+import { useDisclosure } from '@chakra-ui/react'
+import { decodeToken } from '../tools/constantes'
+import { useNavigate } from 'react-router-dom'
 
 interface Cliente {
+  id: number
   nombre: string
   apellido: string
   nit: string
@@ -12,6 +17,11 @@ interface Cliente {
 function Ventas() {
   const [buscarCliente, setBuscarCliente] = useState('')
   const [dataCliente, setDataCliente] = useState({} as Cliente)
+  const { isOpen, onOpen, onClose: onCloseModal } = useDisclosure()
+  const [dataProducts, setDataProducts] = useState([])
+  const [productsToBuy, setProductsToBuy] = useState([] as any[])
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -24,6 +34,18 @@ function Ventas() {
     return () => clearTimeout(timer)
   }, [buscarCliente])
 
+  useEffect(() => {
+    fetchPropio('productos').then((data) => {
+      data.map((item: any) => {
+        if (item?.precio_compra) {
+          item.precio = item.precio_compra
+          delete item.precio_compra
+        }
+      })
+      setDataProducts(data)
+    })
+  }, [])
+
   const handleChangeClient = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
     const regex = /^[0-9\b]+$/
@@ -32,14 +54,87 @@ function Ventas() {
     }
   }
 
-  const addProduct = () => {
-    console.log('addProduct')
+  const handleSubmitToBuy = () => {
+    const dataVenta = {
+      empleado_id: decodeToken().usuarioId,
+      cliente_id: dataCliente.id,
+      fecha: new Date().toISOString().slice(0, 10),
+      subtotal: getSubTotal(),
+      total: getTotal()
+    }
+    fetchPropio('ventas', 'POST', dataVenta).then((data) => {
+      const { insertId } = data
+      if (insertId === 0 || !insertId) return alert('Error al guardar la venta')
+
+      const detalleVenta = productsToBuy.map((item) => {
+        return {
+          producto_id: item.id,
+          cantidad: item.cantidad,
+          venta_id: insertId
+        }
+      })
+
+      fetchPropio('detalle-ventas/many', 'POST', detalleVenta).then((data) => {
+        if (data?.insertId) {
+          fetchPropio('detalle-ventas/' + data?.insertId, 'GET').then(
+            (data) => {
+              const { venta_id } = data[0]
+              fetchPropio('detalle-ventas/venta/' + venta_id, 'GET').then(
+                (data) => {
+                  console.log(data)
+                }
+              )
+            }
+          )
+          alert('Venta realizada con éxito')
+          navigate('/home')
+        } else
+          alert(
+            'Error al realizar la venta, valide los datos o presione cancelar para volver a intentarlo'
+          )
+      })
+    })
+  }
+
+  const getTotal = () => {
+    let total = 0
+    productsToBuy.map((item) => {
+      total += item.total
+    })
+    return total
+  }
+
+  const getSubTotal = () => {
+    let subTotal = 0
+    productsToBuy.map((item) => {
+      subTotal += item.precio * item.cantidad
+    })
+    return subTotal
   }
 
   const clearData = () => {
     setBuscarCliente('')
     setDataCliente({} as Cliente)
+    setProductsToBuy([])
   }
+
+  const itemSelected = (item: any, col: string) => {
+    if (!col) return
+    const cantidad = prompt('Cantidad a comprar')
+    if (!/^\d+$/.test(cantidad ?? '')) {
+      alert('Cantidad no válida')
+      return
+    }
+    const itemNew = {
+      cantidad,
+      ...item,
+      total: item.precio * parseFloat(cantidad ?? '0')
+    }
+    setProductsToBuy([...productsToBuy, itemNew])
+    onCloseModal()
+  }
+
+  const hideColsProducts = ['id', 'created_at', 'updated_at']
 
   return (
     <>
@@ -65,30 +160,48 @@ function Ventas() {
           </div>
         )}
       </div>
-      <div className="flex">
-        <button onClick={addProduct} className="btn btn-primary">
-          Agg
-        </button>
-        <TablaPropia data={[]} />
-      </div>
+      {dataCliente?.nombre && (
+        <>
+          <div className="flex">
+            <ModalPropio
+              buttonToShowModalText="Agg"
+              isOpen={isOpen}
+              onClose={onCloseModal}
+              onOpen={onOpen}
+              titulo="Productos"
+            >
+              <TablaPropia
+                data={dataProducts}
+                hideCamps={hideColsProducts}
+                onColumnSelected={itemSelected}
+                agregarBuscador
+              />
+            </ModalPropio>
+          </div>
+          <div className="px-8 py-4">
+            <TablaPropia data={productsToBuy} hideCamps={hideColsProducts} />
+          </div>
 
-      <div
-        className={`flex mt-4 justify-${
-          dataCliente?.nombre ? 'between' : 'end'
-        } px-4`}
-      >
-        {dataCliente?.nombre && (
-          <button
-            className="btn btn-danger rounded-full w-24 h-24"
-            onClick={clearData}
-          >
-            Cancelar
-          </button>
-        )}
-        <button className="btn btn-success rounded-full w-24 h-24">
-          Realizar Compra
-        </button>
-      </div>
+          <div className={`flex mt-4 justify-between px-4`}>
+            {dataCliente?.nombre && (
+              <button
+                className="btn btn-danger rounded-full w-24 h-24"
+                onClick={clearData}
+              >
+                Cancelar
+              </button>
+            )}
+            {productsToBuy.length > 0 && (
+              <button
+                className="btn btn-success rounded-full w-24 h-24"
+                onClick={handleSubmitToBuy}
+              >
+                Realizar Compra
+              </button>
+            )}
+          </div>
+        </>
+      )}
     </>
   )
 }
