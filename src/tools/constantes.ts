@@ -12,6 +12,7 @@ export const token = () => {
 }
 
 interface Token {
+  usuarioId: number
   usuario: string
   correo: string
   rol: string
