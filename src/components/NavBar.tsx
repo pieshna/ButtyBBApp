@@ -12,7 +12,7 @@ function NavBar() {
     return (
       <Navbar expand="lg" className="bg-pateleta-300">
         <Container>
-          <Link to="/" className="flex">
+          <Link to="/home" className="flex">
             <Navbar.Brand href="/">
               <div className="flex items-center">
                 <img src="/logo.png" alt="imagen" className="w-12" />
@@ -61,7 +61,7 @@ function NavBar() {
     return (
       <Navbar expand="lg" className="bg-pateleta-300">
         <Container>
-          <Link to="/" className="flex">
+          <Link to="/home" className="flex">
             <Navbar.Brand href="/">
               <div className="flex items-center">
                 <img src="/logo.png" alt="imagen" className="w-12" />
