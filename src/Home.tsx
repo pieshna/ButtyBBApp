@@ -1,5 +1,11 @@
+import { decodeToken } from './tools/constantes'
+import EmpleadoView from './principal/EmpleadoView'
+import AdminView from './principal/AdminView'
+
 function Home() {
-  return <div>Home</div>
+  const { rol } = decodeToken()
+
+  return rol === 'Administrador' ? <AdminView /> : <EmpleadoView />
 }
 
 export default Home
