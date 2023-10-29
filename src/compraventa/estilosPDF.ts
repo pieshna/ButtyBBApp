@@ -74,5 +74,8 @@ export const cssPDF = StyleSheet.create({
   },
   textCenter: {
     textAlign: 'center'
+  },
+  textSm: {
+    fontSize: '10px'
   }
 })

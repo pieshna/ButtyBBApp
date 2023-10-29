@@ -143,13 +143,19 @@ function TemplatePDF({ datos, descargar = false }: props) {
                   <Text style={style.tableHeader}>Q. {getTotal()}</Text>
                 </View>
               </View>
+              <View
+                style={[style.contenedor, style.textCenter, style.espacio2]}
+              >
+                <Text>¡Gracias por su compra!</Text>
+              </View>
             </View>
             <View style={style.textCenter}>
               <View style={[style.flexColumn]}>
                 <Text>ButtyBB</Text>
                 <Text>buttybb@gmail.com</Text>
                 <Text>Chiquimula, Guatemala</Text>
-                <Text>+502 4224-7577</Text>
+                <Text>Cel. +502 4224-7577</Text>
+                <Text style={style.textSm}>No se aceptan devoluciones</Text>
               </View>
             </View>
           </View>
