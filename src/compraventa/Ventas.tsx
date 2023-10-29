@@ -56,7 +56,6 @@ function Ventas() {
   }
 
   const handleSubmitToBuy = () => {
-    console.log({ total: getTotal(), type: typeof getTotal() })
     const dataVenta = {
       empleado_id: decodeToken().usuarioId,
       cliente_id: dataCliente.id,
@@ -83,7 +82,6 @@ function Ventas() {
               const { venta_id } = data[0]
               fetchPropio('detalle-ventas/venta/' + venta_id, 'GET').then(
                 (data) => {
-                  console.log(data)
                   setDataToPDF(data)
                 }
               )
