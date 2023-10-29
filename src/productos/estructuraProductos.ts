@@ -7,12 +7,6 @@ export const estructuraProducto: FormularioEstructura = {
     required: true,
     placeholder: 'Ingresa el nombre del producto'
   },
-  imagen: {
-    label: 'Imagen',
-    type: 'text',
-    required: true,
-    placeholder: 'Ingresa la imagen del producto'
-  },
   precio_compra: {
     label: 'Precio de compra',
     type: 'number',

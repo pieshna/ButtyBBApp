@@ -32,6 +32,7 @@ function NewEditProducto({ id, setId, reload }: NewEditProductoProps) {
     if (id) {
       delete datosEnvio.created_at
       delete datosEnvio.updated_at
+      if (!datosEnvio.imagen) delete datosEnvio.imagen
       delete datosEnvio.id
       const stock = {
         precio_venta: parseFloat(datosEnvio.precio_venta),
