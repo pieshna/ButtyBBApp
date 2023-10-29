@@ -24,7 +24,7 @@ const TablaPropia: React.FC<TableProps> = ({
   hideCamps = [],
   onColumnSelected,
   agregarBuscador = false,
-  itemsPerPage = 10
+  itemsPerPage = 5
 }) => {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedField, setSelectedField] = useState('')
