@@ -24,8 +24,8 @@ function Login() {
 
   return (
     <>
-      <div className=" w-full h-screen flex flex-col justify-center items-center p-6">
-        <div className="px-5 pt-5 pb-4 bg-pateleta-400 rounded-md">
+      <div className=" w-full h-screen flex flex-col justify-center items-center p-6 bg-pateleta-200">
+        <div className="px-5 pt-5 pb-4 bg-pateleta-400 rounded-md shadow-2xl">
           <div className="flex flex-col items-center">
             <img src="/logo.png" alt="logo" className="w-44" />
           </div>
