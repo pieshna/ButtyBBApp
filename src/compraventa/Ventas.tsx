@@ -4,7 +4,8 @@ import { fetchPropio } from '../tools/fetchPropio'
 import ModalPropio from '../components/ModalPropio'
 import { useDisclosure } from '@chakra-ui/react'
 import { decodeToken } from '../tools/constantes'
-import { useNavigate } from 'react-router-dom'
+import ReactDOM from 'react-dom'
+import TemplatePDF from './TemplatePDF'
 
 interface Cliente {
   id: number
@@ -20,8 +21,8 @@ function Ventas() {
   const { isOpen, onOpen, onClose: onCloseModal } = useDisclosure()
   const [dataProducts, setDataProducts] = useState([])
   const [productsToBuy, setProductsToBuy] = useState([] as any[])
-
-  const navigate = useNavigate()
+  const [dataToPDF, setDataToPDF] = useState([] as any[])
+  const descargar = false
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -35,7 +36,7 @@ function Ventas() {
   }, [buscarCliente])
 
   useEffect(() => {
-    fetchPropio('productos').then((data) => {
+    fetchPropio('productos/para-venta').then((data) => {
       data.map((item: any) => {
         if (item?.precio_compra) {
           item.precio = item.precio_compra
@@ -55,6 +56,7 @@ function Ventas() {
   }
 
   const handleSubmitToBuy = () => {
+    console.log({ total: getTotal(), type: typeof getTotal() })
     const dataVenta = {
       empleado_id: decodeToken().usuarioId,
       cliente_id: dataCliente.id,
@@ -82,12 +84,13 @@ function Ventas() {
               fetchPropio('detalle-ventas/venta/' + venta_id, 'GET').then(
                 (data) => {
                   console.log(data)
+                  setDataToPDF(data)
                 }
               )
             }
           )
           alert('Venta realizada con éxito')
-          navigate('/home')
+          clearData()
         } else
           alert(
             'Error al realizar la venta, valide los datos o presione cancelar para volver a intentarlo'
@@ -96,10 +99,15 @@ function Ventas() {
     })
   }
 
+  useEffect(() => {
+    if (dataToPDF.length == 0) return
+    if (descargar == false) viewPDF()
+  }, [dataToPDF])
+
   const getTotal = () => {
     let total = 0
     productsToBuy.map((item) => {
-      total += item.total
+      total += parseFloat(item.total)
     })
     return total
   }
@@ -116,6 +124,7 @@ function Ventas() {
     setBuscarCliente('')
     setDataCliente({} as Cliente)
     setProductsToBuy([])
+    setDataToPDF([])
   }
 
   const itemSelected = (item: any, col: string) => {
@@ -128,10 +137,22 @@ function Ventas() {
     const itemNew = {
       cantidad,
       ...item,
-      total: item.precio * parseFloat(cantidad ?? '0')
+      total: (item.precio * parseFloat(cantidad ?? '0')).toFixed(2)
     }
     setProductsToBuy([...productsToBuy, itemNew])
     onCloseModal()
+  }
+
+  const viewPDF = () => {
+    if (dataToPDF.length === 0) return
+    const nuevaVentana = window.open('', '_blank')
+    if (nuevaVentana) {
+      nuevaVentana.document.body.innerHTML = `<div id="root"></div>`
+      ReactDOM.render(
+        <TemplatePDF datos={dataToPDF} />,
+        nuevaVentana.document.getElementById('root')
+      )
+    }
   }
 
   const hideColsProducts = ['id', 'created_at', 'updated_at']
@@ -181,6 +202,11 @@ function Ventas() {
           <div className="px-8 py-4">
             <TablaPropia data={productsToBuy} hideCamps={hideColsProducts} />
           </div>
+          <div className="flex justify-end px-8">
+            <p className="text-xl">
+              Total a Cancelar: Q.{getSubTotal().toFixed(2)}
+            </p>
+          </div>
 
           <div className={`flex mt-4 justify-between px-4`}>
             {dataCliente?.nombre && (
@@ -201,6 +227,9 @@ function Ventas() {
             )}
           </div>
         </>
+      )}
+      {descargar && dataToPDF.length > 0 && (
+        <TemplatePDF datos={dataToPDF} descargar />
       )}
     </>
   )
