@@ -155,6 +155,8 @@ function Ventas() {
 
   const hideColsProducts = ['id', 'created_at', 'updated_at']
 
+  const hideColsTableVenta = ['unidades'].concat(hideColsProducts)
+
   return (
     <>
       <div className="flex p-2 gap-4">
@@ -198,7 +200,7 @@ function Ventas() {
             </ModalPropio>
           </div>
           <div className="px-8 py-4">
-            <TablaPropia data={productsToBuy} hideCamps={hideColsProducts} />
+            <TablaPropia data={productsToBuy} hideCamps={hideColsTableVenta} />
           </div>
           <div className="flex justify-end px-8">
             <p className="text-xl">
