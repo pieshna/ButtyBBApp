@@ -147,9 +147,9 @@ function TemplatePDF({ datos, descargar = false }: props) {
             <View style={style.textCenter}>
               <View style={[style.flexColumn]}>
                 <Text>ButtyBB</Text>
-                <Text>Correo</Text>
-                <Text>Ubicacion</Text>
-                <Text>Telefono</Text>
+                <Text>buttybb@gmail.com</Text>
+                <Text>Chiquimula, Guatemala</Text>
+                <Text>+502 4224-7577</Text>
               </View>
             </View>
           </View>
