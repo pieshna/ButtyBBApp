@@ -23,7 +23,11 @@ function VerUsuario() {
   }
 
   const handleDelete = (id: number) => {
-    console.log('Eliminar', id)
+    const confirm = window.confirm('¿Está seguro de eliminar este usuario?')
+    if (!confirm) return
+    fetchPropio(`usuarios/${id}`, 'DELETE').then(() => {
+      setReload(true)
+    })
   }
 
   const hideCols = [

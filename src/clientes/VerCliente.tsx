@@ -21,7 +21,11 @@ function VerCliente() {
   }
 
   const handleDelete = (id: number) => {
-    console.log('Eliminar', id)
+    const confirm = window.confirm('¿Está seguro de eliminar este cliente?')
+    if (!confirm) return
+    fetchPropio(`clientes/${id}`, 'DELETE').then(() => {
+      setReload(true)
+    })
   }
 
   const hideCols = [

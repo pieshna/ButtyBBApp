@@ -19,7 +19,11 @@ function VerProveedor() {
   }
 
   const handleDelete = (id: number) => {
-    console.log('Eliminar', id)
+    const confirm = window.confirm('¿Está seguro de eliminar este proveedor?')
+    if (!confirm) return
+    fetchPropio(`proveedores/${id}`, 'DELETE').then(() => {
+      setReload(true)
+    })
   }
 
   return (
