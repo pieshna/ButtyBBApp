@@ -40,6 +40,7 @@ function NewEditProducto({ id, setId, reload }: NewEditProductoProps) {
         descripcion: datosEnvio.descripcion,
         producto_id: parseInt(id)
       }
+      if (!stock.descripcion) delete stock.descripcion
       fetchPropio(`productos/${id}`, 'PUT', datosEnvio).then(() => {
         fetchPropio(`stock/producto/${id}`, 'PUT', stock).then(() => {
           handleCloseModal()
@@ -53,6 +54,7 @@ function NewEditProducto({ id, setId, reload }: NewEditProductoProps) {
         descripcion: datosEnvio.descripcion,
         producto_id: 0
       }
+      if (!stock.descripcion) delete stock.descripcion
       fetchPropio('productos', 'POST', datosEnvio).then((data) => {
         stock.producto_id = parseInt(data.insertId)
         fetchPropio('stock', 'POST', stock).then(() => {
