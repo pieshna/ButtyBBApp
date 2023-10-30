@@ -105,33 +105,38 @@ function TemplatePDF({ datos, descargar = false }: props) {
               <Text>Cliente: {datos[0].cliente_nombre}</Text>
             </View>
             <View style={[style.flexGrow, style.contenedor]}>
-              <View
-                style={[
-                  style.flexRow,
-                  style.justifyBetween,
-                  style.border,
-                  style.contenedor
-                ]}
-              >
-                <Text style={style.tableHeader}>Producto</Text>
-                <Text style={style.tableHeader}>Cantidad</Text>
-                <Text style={style.tableHeader}>Precio</Text>
-                <Text style={style.tableHeader}>Subtotal</Text>
+              <View style={[style.flexRow, style.justifyBetween, style.border]}>
+                <Text style={[style.tableHeader, style.textLeft]}>
+                  Producto
+                </Text>
+                <Text style={[style.tableHeader, style.textCenter]}>
+                  Cantidad
+                </Text>
+                <Text style={[style.tableHeader, style.textCenter]}>
+                  Precio
+                </Text>
+                <Text style={[style.tableHeader, style.textRight]}>
+                  Subtotal
+                </Text>
               </View>
               <View>
                 {datos.map((item) => (
                   <View
-                    style={[
-                      style.flexRow,
-                      style.justifyBetween,
-                      style.contenedor
-                    ]}
+                    style={[style.flexRow, style.justifyBetween]}
                     key={item.id}
                   >
-                    <Text style={style.tableData}>{item.producto_nombre}</Text>
-                    <Text style={style.tableData}>{item.cantidad}</Text>
-                    <Text style={style.tableData}>{item.precio_venta}</Text>
-                    <Text style={style.tableData}>{item.subtotal}</Text>
+                    <Text style={[style.tableData, style.textLeft]}>
+                      {item.producto_nombre}
+                    </Text>
+                    <Text style={[style.tableData, style.textCenter]}>
+                      {item.cantidad}
+                    </Text>
+                    <Text style={[style.tableData, style.textCenter]}>
+                      Q. {item.precio_venta}
+                    </Text>
+                    <Text style={[style.tableData, style.textRight]}>
+                      Q. {item.subtotal}
+                    </Text>
                   </View>
                 ))}
               </View>
@@ -139,8 +144,8 @@ function TemplatePDF({ datos, descargar = false }: props) {
                 <View
                   style={[style.dFlex, style.justifyEnd, style.borderBottom]}
                 >
-                  <Text style={style.tableHeader}>Total</Text>
-                  <Text style={style.tableHeader}>Q. {getTotal()}</Text>
+                  <Text style={{ paddingRight: '5px' }}>Total</Text>
+                  <Text>Q. {getTotal()}</Text>
                 </View>
               </View>
               <View

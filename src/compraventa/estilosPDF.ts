@@ -49,9 +49,12 @@ export const cssPDF = StyleSheet.create({
     borderBottom: '1px solid black'
   },
   tableHeader: {
-    padding: '5px'
+    padding: '5px',
+    width: '100%'
   },
   tableData: {
+    display: 'flex',
+    width: '100%',
     padding: '5px'
   },
   marcaDeAgua: {
@@ -74,6 +77,12 @@ export const cssPDF = StyleSheet.create({
   },
   textCenter: {
     textAlign: 'center'
+  },
+  textRight: {
+    textAlign: 'right'
+  },
+  textLeft: {
+    textAlign: 'left'
   },
   textSm: {
     fontSize: '10px'
