@@ -159,7 +159,7 @@ function Ventas() {
 
   return (
     <>
-      <div className="flex p-2 gap-4">
+      <div className="flex py-2 gap-4 px-8">
         <div className="w-52">
           <label>NIT:</label>
           <input
@@ -183,7 +183,7 @@ function Ventas() {
       </div>
       {dataCliente?.nombre && (
         <>
-          <div className="flex">
+          <div className="flex px-8">
             <ModalPropio
               buttonToShowModalText="Agg"
               isOpen={isOpen}
