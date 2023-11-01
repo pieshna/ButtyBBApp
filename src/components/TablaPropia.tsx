@@ -2,6 +2,7 @@ import { Table as BootstrapTable, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import ReactPaginate from 'react-paginate'
+import { isNumber } from 'chart.js/helpers'
 
 interface TableProps {
   data: any[]
@@ -43,15 +44,33 @@ const TablaPropia: React.FC<TableProps> = ({
     setSearchTerm('')
   }
 
-  const filteredData = data.filter((item) =>
-    selectedField
+  const filteredData = data.filter((item) => {
+    if (!selectedField)
+      return Object.values(item).some(
+        (value) =>
+          typeof value === 'string' &&
+          value.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    if (isNumber(item[selectedField])) {
+      return selectedField
+        ? item[selectedField]
+            .toString()
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase())
+        : Object.values(item).some(
+            (value) =>
+              typeof value === 'string' &&
+              value.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+    }
+    return selectedField
       ? item[selectedField].toLowerCase().includes(searchTerm.toLowerCase())
       : Object.values(item).some(
           (value) =>
             typeof value === 'string' &&
             value.toLowerCase().includes(searchTerm.toLowerCase())
         )
-  )
+  })
 
   const pageCount = Math.ceil(filteredData.length / itemsPerPage)
   const offset = currentPage * itemsPerPage
