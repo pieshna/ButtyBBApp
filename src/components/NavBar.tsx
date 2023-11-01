@@ -23,16 +23,20 @@ function NavBar() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
-              <Link to="/clientes">
+              <Link to="/clientes" className="font-bold">
                 <Nav.Link href="/clientes">Clientes</Nav.Link>
               </Link>
-              <Link to="/proveedores">
+              <Link to="/proveedores" className="font-bold">
                 <Nav.Link href="/proveedores">Proveedores</Nav.Link>
               </Link>
-              <Link to="/productos">
+              <Link to="/productos" className="font-bold">
                 <Nav.Link href="/productos">Productos</Nav.Link>
               </Link>
-              <NavDropdown title="Administracion" id="basico-nav-dropdown">
+              <NavDropdown
+                title="Administracion"
+                id="basico-nav-dropdown"
+                className="font-bold"
+              >
                 <Link to="/usuarios">
                   <NavDropdown.Item href="/usuarios">Usuarios</NavDropdown.Item>
                 </Link>
@@ -43,7 +47,11 @@ function NavBar() {
                   <NavDropdown.Item href="/ventas">Ventas</NavDropdown.Item>
                 </Link>
               </NavDropdown>
-              <NavDropdown title={usuario} id="basic-nav-dropdown">
+              <NavDropdown
+                title={usuario}
+                id="basic-nav-dropdown"
+                className="font-bold"
+              >
                 <Link to="/logout">
                   <NavDropdown.Item href="/logout">
                     Cerrar Sesion.
@@ -72,14 +80,18 @@ function NavBar() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
-              <Link to="/clientes">
+              <Link to="/clientes" className="font-bold">
                 <Nav.Link href="/clientes">Clientes</Nav.Link>
               </Link>
-              <Link to="/ventas">
+              <Link to="/ventas" className="font-bold">
                 <Nav.Link href="/ventas">Ventas</Nav.Link>
               </Link>
 
-              <NavDropdown title={usuario} id="basic-nav-dropdown">
+              <NavDropdown
+                title={usuario}
+                id="basic-nav-dropdown"
+                className="font-bold"
+              >
                 <Link to="/logout">
                   <NavDropdown.Item href="/logout">
                     Cerrar Sesion.
