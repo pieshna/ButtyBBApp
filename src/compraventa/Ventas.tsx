@@ -50,7 +50,26 @@ function Ventas() {
   const handleChangeClient = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
     const regex = /^[0-9\b]+$/
-    if (value === '' || regex.test(value)) {
+    if (
+      value === '' ||
+      regex.test(value) ||
+      value === 'c' ||
+      value === 'C' ||
+      value === 'f' ||
+      value === 'F' ||
+      value === 'cf' ||
+      value === 'CF'
+    ) {
+      if (
+        value == 'c' ||
+        value == 'C' ||
+        value == 'f' ||
+        value == 'F' ||
+        value == 'cf' ||
+        value == 'CF'
+      ) {
+        value.toLocaleLowerCase()
+      }
       setBuscarCliente(value)
     }
   }
