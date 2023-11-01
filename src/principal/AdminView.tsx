@@ -28,6 +28,7 @@ function AdminView() {
           <p className="text-center font-bold text-xl">
             Top 5 Productos Vendidos
           </p>
+          <p className="text-center">{new Date().toLocaleDateString()}</p>
           {dataGrafica && <BarChart datosConfig={dataGrafica.datosConfig} />}
         </div>
         <div className="flex-1">
@@ -36,9 +37,13 @@ function AdminView() {
           <div className="flex flex-col items-center pt-3">
             {dataProducts.map((item) => {
               return (
-                <div className="flex gap-10 pt-1">
-                  <p>{item.nombre}</p>
-                  <p>{item.cantidad}</p>
+                <div className="flex gap-10 pt-1 border-b-2 text-pateleta-950">
+                  <div className="flex flex-col justify-end w-36 ">
+                    <p>{item.nombre}</p>
+                  </div>
+                  <div className="flex flex-col justify-end items-center w-10 ">
+                    <p>{item.cantidad}</p>
+                  </div>
                 </div>
               )
             })}
