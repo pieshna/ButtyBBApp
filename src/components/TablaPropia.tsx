@@ -16,17 +16,24 @@ interface TableProps {
   onColumnSelected?: (item: any, column: string) => void
   agregarBuscador?: boolean
   itemsPerPage?: number
+  headerName?: headerProps[]
 }
 
-const TablaPropia: React.FC<TableProps> = ({
+type headerProps = {
+  header: string
+  value: string
+}
+
+const TablaPropia = ({
   data,
   enumerar,
   acciones,
   hideCamps = [],
   onColumnSelected,
   agregarBuscador = true,
-  itemsPerPage = 5
-}) => {
+  itemsPerPage = 5,
+  headerName = []
+}: TableProps) => {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedField, setSelectedField] = useState('')
   const [currentPage, setCurrentPage] = useState(0)
@@ -34,7 +41,6 @@ const TablaPropia: React.FC<TableProps> = ({
   if (data.length === 0) {
     return <p>No hay datos disponibles.</p>
   }
-
   const headers = Object.keys(data[0]).filter(
     (header) => !hideCamps.includes(header)
   )
@@ -80,6 +86,15 @@ const TablaPropia: React.FC<TableProps> = ({
     setCurrentPage(data.selected)
   }
 
+  const getHeaderName = (header: string) => {
+    if (headerName.length === 0)
+      return header.charAt(0).toUpperCase() + header.slice(1)
+    const headerObj = headerName.find((h) => h.value === header)
+    return headerObj
+      ? headerObj.header
+      : header.charAt(0).toUpperCase() + header.slice(1)
+  }
+
   return (
     <div className="table-responsive">
       {agregarBuscador && (
@@ -92,7 +107,7 @@ const TablaPropia: React.FC<TableProps> = ({
             <option value="">Buscar en todos los campos</option>
             {headers.map((header) => (
               <option key={header} value={header}>
-                Buscar en {header}
+                Buscar en {getHeaderName(header)}
               </option>
             ))}
           </select>
@@ -110,7 +125,7 @@ const TablaPropia: React.FC<TableProps> = ({
           <tr>
             {enumerar && <th>#</th>}
             {headers.map((header) => (
-              <th key={header}>{header}</th>
+              <th key={header}>{getHeaderName(header)}</th>
             ))}
             {acciones && <th>Acciones</th>}
           </tr>
@@ -128,7 +143,7 @@ const TablaPropia: React.FC<TableProps> = ({
                 </td>
               ))}
               {acciones && (
-                <td>
+                <td className="md:w-60">
                   {acciones.editar && (
                     <Link to={acciones.editar(item.id)}>
                       <Button variant="primary">Editar</Button>
@@ -148,10 +163,10 @@ const TablaPropia: React.FC<TableProps> = ({
                   )}
 
                   <button
-                    className="btn btn-danger"
+                    className="btn btn-danger ml-2"
                     onClick={() => acciones.eliminar(item.id)}
                   >
-                    Eliminar
+                    Dar de Baja
                   </button>
                 </td>
               )}
