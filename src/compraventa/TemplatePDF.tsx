@@ -85,7 +85,7 @@ function TemplatePDF({ datos, descargar = false }: props) {
             >
               <Image src="/logo.png" style={style.logo} />
               <Text>
-                Factura:{' '}
+                Comprobante:{' '}
                 {datos[0].venta_id + getCorrelativo(datos[0].created_at)}
               </Text>
             </View>
