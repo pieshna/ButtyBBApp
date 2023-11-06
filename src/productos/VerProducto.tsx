@@ -28,6 +28,11 @@ function VerProducto() {
 
   const hideCols = ['imagen']
 
+  const headerName = [
+    { value: 'created_at', header: 'Fecha de creación' },
+    { value: 'updated_at', header: 'Fecha de actualización' }
+  ]
+
   return (
     <div className="p-5">
       <h2 className="pb-2 text-center text-4xl">Productos</h2>
@@ -40,6 +45,7 @@ function VerProducto() {
         acciones={{ editarPerso: handleEdit, eliminar: handleDelete }}
         hideCamps={hideCols}
         agregarBuscador
+        headerName={headerName}
       />
     </div>
   )

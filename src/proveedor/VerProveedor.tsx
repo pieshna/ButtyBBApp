@@ -26,6 +26,11 @@ function VerProveedor() {
     })
   }
 
+  const headerName = [
+    { value: 'created_at', header: 'Fecha de creación' },
+    { value: 'updated_at', header: 'Fecha de actualización' }
+  ]
+
   return (
     <div className="p-5">
       <h2 className="pb-2 text-center text-4xl">Proveedores</h2>
@@ -36,6 +41,7 @@ function VerProveedor() {
       <TablaPropia
         data={data}
         acciones={{ editarPerso: handleEdit, eliminar: handleDelete }}
+        headerName={headerName}
       />
     </div>
   )
