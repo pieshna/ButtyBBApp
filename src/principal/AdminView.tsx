@@ -23,15 +23,15 @@ function AdminView() {
 
   return (
     <>
-      <div className="grid grid-cols-2 pt-10">
-        <div className="flex-1">
+      <div className="grid md:grid-cols-2">
+        <div className="grid place-items-center pt-10">
           <p className="text-center font-bold text-xl">
             Top 5 Productos Vendidos
           </p>
           <p className="text-center">{new Date().toLocaleDateString()}</p>
           {dataGrafica && <BarChart datosConfig={dataGrafica.datosConfig} />}
         </div>
-        <div className="flex-1">
+        <div className="flex-1 pt-10">
           <p className="text-center text-xl">Productos mas vendidos</p>
           <p className="text-center">{new Date().toLocaleDateString()}</p>
           <div className="flex flex-col items-center pt-3">

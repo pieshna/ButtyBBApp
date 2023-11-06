@@ -34,13 +34,13 @@ const BarChart = ({ datosConfig }: BarChartProps) => {
   }
   return (
     <>
-      <div className="row d-flex mb-5 mt-1">
-        <div className="row d-flex justify-content-center align-items-center">
-          <div className="col-auto d-flex flex-col">
-            <Bar data={data} />
-            <div className="d-flex justify-content-center align-items-center"></div>
-          </div>
-        </div>
+      <div className="h-64">
+        <Bar
+          data={data}
+          width={'auto'}
+          height={'auto'}
+          options={{ maintainAspectRatio: false }}
+        />
       </div>
     </>
   )
