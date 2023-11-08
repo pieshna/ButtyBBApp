@@ -21,8 +21,14 @@ function VerProducto() {
   const handleDelete = (id: number) => {
     const confirm = window.confirm('¿Está seguro de eliminar este producto?')
     if (!confirm) return
-    fetchPropio(`productos/${id}`, 'DELETE').then(() => {
-      setReload(true)
+    fetchPropio(`stock/producto/${id}`).then((data) => {
+      if (data.length === 0) return
+      const idStock = data[0].id
+      fetchPropio(`stock/${idStock}`, 'DELETE').then(() => {
+        fetchPropio(`productos/${id}`, 'DELETE').then(() => {
+          setReload(true)
+        })
+      })
     })
   }
 
